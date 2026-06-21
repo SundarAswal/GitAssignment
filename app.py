@@ -17,6 +17,11 @@ def get_data():
     return jsonify(data)
 
 # Form Page
+@app.route('/todo')
+def todo_form():
+    return render_template('ToDoForm.html')
+
+# Form Page
 @app.route('/')
 def form():
     return render_template('form.html')
@@ -35,6 +40,19 @@ def submit():
 
         return redirect(url_for('success'))
 
+    except Exception as e:
+        return f"Error: {str(e)}"
+
+# To do Form Submission
+@app.route('/submittodoitem', methods=['POST'])
+def submit_todo():
+    try:
+        data = request.form
+        db.todos.insert_one({
+            "itemName": data.get("itemName"),
+            "itemDescription": data.get("itemDescription")
+        })
+        return redirect(url_for('success'))
     except Exception as e:
         return f"Error: {str(e)}"
 
