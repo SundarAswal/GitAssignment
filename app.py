@@ -50,7 +50,8 @@ def submit_todo():
         data = request.form
         db.todos.insert_one({
             "itemName": data.get("itemName"),
-            "itemDescription": data.get("itemDescription")
+            "itemDescription": data.get("itemDescription"),
+            "itemId": data.get("itemId")
         })
         return redirect(url_for('success'))
     except Exception as e:
